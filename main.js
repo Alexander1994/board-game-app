@@ -39,19 +39,71 @@ for (let i=0; i<btns.length; i++) {
 const startRoundBtn = document.getElementById("StartRound");
 const roundTimeInput = document.getElementById("time");
 const display = document.querySelector('#timeDisplay');
+const dice = document.querySelectorAll('.sc__red, .sc__yellow');
+const whiteDie = document.querySelector('.sc__white');
 
 const alertSound = new Audio('alert_sound.mp3');
+let started = false;
 
+const pCountInput = document.querySelector("#playercount");
+
+const inputForm = document.querySelector(".input_form");
 
 startRoundBtn.addEventListener("click", event => {
+    if (started) return;
     let timeStr = roundTimeInput.value;
+    let playerCountStr = pCountInput.value; 
     if (timeStr === "") {
         alert("Please enter a number for the time");
         return;
     }
+    if (playerCountStr === "") {
+        alert("Please enter a player count");
+        return;
+    }
+    playerCount = parseInt(playerCountStr);
     let timeInSec = parseInt(timeStr) * 60; // convert to milliseconds
+    rollDice();
+    inputForm.style.display = "none";
     startTimer(timeInSec, display);
 });
+
+const turnCounter = document.querySelector("#pXTurn");
+
+let pXTurn = 1;
+let playerCount;
+
+
+function incTurnCounterAndUpdateUI() {
+    pXTurn = (pXTurn % playerCount) + 1;
+    turnCounter.innerText = "Player " + pXTurn + " turn";
+}
+
+const xSidedDie = sides => Math.floor(sides * Math.random()) + 1;
+
+function rollaDie(diceEl) {
+    const dieSides = 6;
+    let dieResult = xSidedDie(dieSides);
+    diceEl.innerText = dieResult;
+}
+
+function rollDice() {
+    dice.forEach(die => {
+        rollaDie(die);
+    });
+    // roll white dice
+    let diceNumResult = xSidedDie(6);
+    let display;
+    if (diceNumResult <=3 )
+        display = "Black Raiders";
+    else if (diceNumResult === 4)
+        display = "Blue City";
+    else if (diceNumResult === 5) 
+        display = "Green City";
+    else
+        display = "Yellow City";
+    whiteDie.innerText = display;
+}
 
 
 function startTimer(duration, display) {
@@ -71,7 +123,10 @@ function startTimer(duration, display) {
 
         if (minutes === 0 && seconds === 0) {
             clearInterval(intervalId);
+            rollDice();
             alertSound.play();
+            incTurnCounterAndUpdateUI()
+            startTimer(duration, display);
         }
 
         minutes = minutes < 10 ? "0" + minutes : minutes;
@@ -86,6 +141,7 @@ function startTimer(duration, display) {
         }
     };
     // we don't want to wait a full second before the timer starts
+    started = true;
     timer();
     intervalId = setInterval(timer, 1000);
 }

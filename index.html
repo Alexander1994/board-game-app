@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css" />
 
-    <title>Board Games Apps</title>
+    <title>Board Game Apps</title>
     <style>
         body {
             margin: 0;
@@ -36,8 +36,8 @@
         }
       </style>
       <div id="MainPg" class="Pg">
-        <h1>Board Games Apps</h1>
-        <button name="SimpleCountdown" class="main__button">Simple Countdown</button>
+        <h1>Board Game Apps</h1>
+        <button name="SpeedCatan" class="main__button">Speed Catan</button>
       </div>
       <style>
           /* sc__ */
@@ -51,27 +51,55 @@
             font-size: 24px;
           }
           .sc__btn {
-            width: calc(100vw - 10px);
-
-            height: 50vh;
             font-size: 18px;
+            width: 100%;
           }
-          #timeDisplay {
+          #timeDisplay, #pXTurn {
             display: flex;
             justify-content: center;
-            font-size: 18px;
+            font-size: 36px;
           }
           .sc__wrapper {
-              margin: 5px 5px;
+            margin: 5px 5px;
+          }
+          .sc__dice {
+            -webkit-text-stroke: 0.5px #222;
+            font-size: 36px;
+          }
+          .sc__red {
+            color: red;
+            
+          }
+          .sc__yellow {
+            color: yellow;
+          }
+          .sc__white {
+            color: black;
+          }
+          .dice_container {
+            display: flex;
+            justify-content: space-evenly;
           }
       </style>
-      <div id="SimpleCountdownPg" class="Pg">
-        <h1 class="sc__h1">Simple Turn Timer</h1>
+      <div id="SpeedCatanPg" class="Pg">
+        <h1 class="sc__h1">Speed Catan</h1>
         <button name="Main" class="Main sc__home"><i class="fa fa-home"></i></button>
         <div class="sc__wrapper">
-            <div><span>Round length (min):</span><input type="number" name="time" id="time"></div>
-            <p id="timeDisplay">00:00</p>
+          <div class="input_form">
+            <div><span>Round length (min): </span><input type="number" name="time" id="time"></div>
+            <div><span>Player Count: </span><input type="number" name="playercount" id="playercount"></div>
             <button id="StartRound" class="sc__btn">Start Round</button>
+          </div>
+
+            <p id="pXTurn">Player 1 turn</p>
+            <p id="timeDisplay">00:00</p>
+
+            <div class="dice_container">
+              <div class="sc__red sc__dice">Die</div>
+              <div class="sc__yellow sc__dice">Die</div>
+              <div class="sc__white sc__dice">Die</div>
+            </div>
+
         </div>
       </div>
 
