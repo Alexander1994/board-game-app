@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css" />
+
+    <title>Board Games Apps</title>
+    <style>
+        body {
+            margin: 0;
+        }
+        .Pg {
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <body>
+      <style>
+          /* main__ */
+        .main__button {
+            margin: 0;
+            width: 100vw;
+        }
+
+        h1 {
+            display: flex;
+            justify-content: center;
+        }
+        #MainPg {
+            display: block;
+        }
+      </style>
+      <div id="MainPg" class="Pg">
+        <h1>Board Games Apps</h1>
+        <button name="SimpleCountdown" class="main__button">Simple Countdown</button>
+      </div>
+      <style>
+          /* sc__ */
+          .sc__home {
+            font-size: 24px;
+            position: absolute;
+            top: 5px;
+            right: 5px;
+          }
+          .sc__h1 {
+            font-size: 24px;
+          }
+          .sc__btn {
+            width: calc(100vw - 10px);
+
+            height: 50vh;
+            font-size: 18px;
+          }
+          #timeDisplay {
+            display: flex;
+            justify-content: center;
+            font-size: 18px;
+          }
+          .sc__wrapper {
+              margin: 5px 5px;
+          }
+      </style>
+      <div id="SimpleCountdownPg" class="Pg">
+        <h1 class="sc__h1">Simple Turn Timer</h1>
+        <button name="Main" class="Main sc__home"><i class="fa fa-home"></i></button>
+        <div class="sc__wrapper">
+            <div><span>Round length (min):</span><input type="number" name="time" id="time"></div>
+            <p id="timeDisplay">00:00</p>
+            <button id="StartRound" class="sc__btn">Start Round</button>
+        </div>
+      </div>
+
+    <script src="main.js"></script>
+  </body>
+</html>
