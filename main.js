@@ -94,14 +94,19 @@ function rollDice() {
     // roll white dice
     let diceNumResult = xSidedDie(6);
     let display;
-    if (diceNumResult <=3 )
+    if (diceNumResult <=3 ) {
         display = "Black Raiders";
-    else if (diceNumResult === 4)
+        whiteDie.style.color = "black";
+    } else if (diceNumResult === 4) {
         display = "Blue City";
-    else if (diceNumResult === 5) 
+        whiteDie.style.color = "blue";
+    } else if (diceNumResult === 5) {
         display = "Green City";
-    else
+        whiteDie.style.color = "green";
+    } else {
         display = "Yellow City";
+        whiteDie.style.color = "yellow";
+    }
     whiteDie.innerText = display;
 }
 
