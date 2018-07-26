@@ -50,7 +50,7 @@
           .sc__h1 {
             font-size: 24px;
           }
-          .sc__btn {
+          .sc__btn, #endTurn {
             font-size: 18px;
             width: 100%;
           }
@@ -64,11 +64,10 @@
           }
           .sc__dice {
             -webkit-text-stroke: 0.5px #222;
-            font-size: 36px;
+            font-size: 48px;
           }
           .sc__red {
             color: red;
-            
           }
           .sc__yellow {
             color: yellow;
@@ -86,10 +85,11 @@
         <button name="Main" class="Main sc__home"><i class="fa fa-home"></i></button>
         <div class="sc__wrapper">
           <div class="input_form">
-            <div><span>Round length (min): </span><input type="number" name="time" id="time"></div>
-            <div><span>Player Count: </span><input type="number" name="playercount" id="playercount"></div>
+            <div><span>Round length (min) </span><input type="number" name="time" id="time"></div>
+            <div><span>Player Count </span><input type="number" name="playercount" id="playercount"></div>
             <button id="StartRound" class="sc__btn">Start Round</button>
           </div>
+          <button id="endTurn">End turn</button>
 
             <p id="pXTurn">Player 1 turn</p>
             <p id="timeDisplay">00:00</p>

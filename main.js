@@ -37,10 +37,13 @@ for (let i=0; i<btns.length; i++) {
 
 /* Simple Count Down Page */
 const startRoundBtn = document.getElementById("StartRound");
+const endTurn = document.querySelector('#endTurn');
 const roundTimeInput = document.getElementById("time");
 const display = document.querySelector('#timeDisplay');
+
 const dice = document.querySelectorAll('.sc__red, .sc__yellow');
 const whiteDie = document.querySelector('.sc__white');
+
 
 const alertSound = new Audio('alert_sound.mp3');
 let started = false;
@@ -48,6 +51,8 @@ let started = false;
 const pCountInput = document.querySelector("#playercount");
 
 const inputForm = document.querySelector(".input_form");
+
+let timeInSec;
 
 startRoundBtn.addEventListener("click", event => {
     if (started) return;
@@ -62,7 +67,7 @@ startRoundBtn.addEventListener("click", event => {
         return;
     }
     playerCount = parseInt(playerCountStr);
-    let timeInSec = parseInt(timeStr) * 60; // convert to milliseconds
+    timeInSec = parseInt(timeStr) * 60; // convert to milliseconds
     rollDice();
     inputForm.style.display = "none";
     startTimer(timeInSec, display);
@@ -110,13 +115,24 @@ function rollDice() {
     whiteDie.innerText = display;
 }
 
+let intervalId;
+
+endTurn.addEventListener("click", ()=>nextTurn());
+
+function nextTurn() {
+    if (intervalId === undefined) return;
+    clearInterval(intervalId);
+    rollDice();
+    alertSound.play();
+    incTurnCounterAndUpdateUI()
+    startTimer(timeInSec, display);
+}
 
 function startTimer(duration, display) {
     var start = Date.now(),
         diff,
         minutes,
-        seconds,
-        intervalId;
+        seconds;
     function timer() {
         // get the number of seconds that have elapsed since 
         // startTimer() was called
@@ -126,18 +142,14 @@ function startTimer(duration, display) {
         minutes = (diff / 60) | 0;
         seconds = (diff % 60) | 0;
 
-        if (minutes === 0 && seconds === 0) {
-            clearInterval(intervalId);
-            rollDice();
-            alertSound.play();
-            incTurnCounterAndUpdateUI()
-            startTimer(duration, display);
-        }
-
         minutes = minutes < 10 ? "0" + minutes : minutes;
         seconds = seconds < 10 ? "0" + seconds : seconds;
 
         display.textContent = minutes + ":" + seconds;
+
+        if (display.textContent === "00:00") {
+            nextTurn();
+        }
 
         if (diff <= 0) {
             // add one second so that the count down starts at the full duration
