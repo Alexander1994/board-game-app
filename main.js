@@ -62,8 +62,8 @@ startRoundBtn.addEventListener("click", event => {
     let minStr = roundTimeInputMin.value;
     let secStr = roundTimeInputSec.value;
     let playerCountStr = pCountInput.value; 
-    if (minStr === "") {
-        alert("Please atleast enter a numver for the minute section for the time");
+    if ((minStr === "" && secStr === "") || (minStr === "0" && secStr === "0")) {
+        alert("Please atleast enter a number for the minute or second input");
         return;
     }
     if (playerCountStr === "") {
