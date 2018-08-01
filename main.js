@@ -121,7 +121,13 @@ function rollDice() {
 
 let intervalId;
 
-endTurn.addEventListener("click", ()=>nextTurn());
+endTurn.addEventListener("click", () => {
+    if (paused)  {
+        durationLeftFromPause = timeInSec;
+        display.innerText = timeToStr(durationLeftFromPause);
+    }
+    nextTurn()
+});
 
 function nextTurn() {
     if (intervalId === undefined) return;
@@ -144,7 +150,6 @@ pause.addEventListener('click', function() {
         } else {
             paused = true;
             pause.innerText = "unpause";
-
         }
     }
 });
@@ -152,6 +157,14 @@ pause.addEventListener('click', function() {
 const parseStrTime = (strTime) => {
     let timeArr = strTime.split(":");
     return (+timeArr[0])*60 + (+timeArr[1]);
+};
+const timeToStr = (time) => {
+    minutes = (time / 60) | 0;
+    seconds = (time % 60) | 0;
+
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+    return minutes + ":" + seconds;
 };
 
 function startTimer(duration, display) {
@@ -163,20 +176,14 @@ function startTimer(duration, display) {
         // get the number of seconds that have elapsed since 
         // startTimer() was called
         diff = duration - (((Date.now() - start) / 1000) | 0);
-
-        // does the same job as parseInt truncates the float
-        minutes = (diff / 60) | 0;
-        seconds = (diff % 60) | 0;
+        
         if (paused) {
             durationLeftFromPause = parseStrTime(display.textContent);            
             clearInterval(intervalId);
             return;
         }
-        minutes = minutes < 10 ? "0" + minutes : minutes;
-        seconds = seconds < 10 ? "0" + seconds : seconds;
 
-
-        display.textContent = minutes + ":" + seconds;
+        display.textContent = timeToStr(diff); // diff = time to set in seconds
 
         if (display.textContent === "00:00") {
             nextTurn();
