@@ -38,7 +38,10 @@ for (let i=0; i<btns.length; i++) {
 /* Simple Count Down Page */
 const startRoundBtn = document.getElementById("StartRound");
 const endTurn = document.querySelector('#endTurn');
-const roundTimeInput = document.getElementById("time");
+const pause = document.querySelector('#pause');
+const roundTimeInputMin = document.getElementById("minutes");
+const roundTimeInputSec = document.getElementById("seconds");
+
 const display = document.querySelector('#timeDisplay');
 
 const dice = document.querySelectorAll('.sc__red, .sc__yellow');
@@ -56,10 +59,11 @@ let timeInSec;
 
 startRoundBtn.addEventListener("click", event => {
     if (started) return;
-    let timeStr = roundTimeInput.value;
+    let minStr = roundTimeInputMin.value;
+    let secStr = roundTimeInputSec.value;
     let playerCountStr = pCountInput.value; 
-    if (timeStr === "") {
-        alert("Please enter a number for the time");
+    if (minStr === "") {
+        alert("Please atleast enter a numver for the minute section for the time");
         return;
     }
     if (playerCountStr === "") {
@@ -67,7 +71,7 @@ startRoundBtn.addEventListener("click", event => {
         return;
     }
     playerCount = parseInt(playerCountStr);
-    timeInSec = parseInt(timeStr) * 60; // convert to milliseconds
+    timeInSec = parseStrTime(minStr+":"+secStr);
     rollDice();
     inputForm.style.display = "none";
     startTimer(timeInSec, display);
@@ -128,6 +132,28 @@ function nextTurn() {
     startTimer(timeInSec, display);
 }
 
+let paused = false;
+let durationLeftFromPause;
+
+pause.addEventListener('click', function() {
+    if (started) {
+        if (paused) {
+            startTimer(durationLeftFromPause, display);
+            pause.innerText = "pause";
+            paused = false;
+        } else {
+            paused = true;
+            pause.innerText = "unpause";
+
+        }
+    }
+});
+
+const parseStrTime = (strTime) => {
+    let timeArr = strTime.split(":");
+    return (+timeArr[0])*60 + (+timeArr[1]);
+};
+
 function startTimer(duration, display) {
     var start = Date.now(),
         diff,
@@ -141,9 +167,14 @@ function startTimer(duration, display) {
         // does the same job as parseInt truncates the float
         minutes = (diff / 60) | 0;
         seconds = (diff % 60) | 0;
-
+        if (paused) {
+            durationLeftFromPause = parseStrTime(display.textContent);            
+            clearInterval(intervalId);
+            return;
+        }
         minutes = minutes < 10 ? "0" + minutes : minutes;
         seconds = seconds < 10 ? "0" + seconds : seconds;
+
 
         display.textContent = minutes + ":" + seconds;
 

@@ -50,8 +50,8 @@
           .sc__h1 {
             font-size: 24px;
           }
-          .sc__btn, #endTurn {
-            font-size: 18px;
+          .sc__btn, #endTurn, #pause {
+            font-size: 24px;
             width: 100%;
           }
           #timeDisplay, #pXTurn {
@@ -79,16 +79,20 @@
             display: flex;
             justify-content: space-evenly;
           }
+          #seconds, #minutes {
+            width: 96px;
+          }
       </style>
       <div id="SpeedCatanPg" class="Pg">
         <h1 class="sc__h1">Speed Catan</h1>
         <button name="Main" class="Main sc__home"><i class="fa fa-home"></i></button>
         <div class="sc__wrapper">
           <div class="input_form">
-            <div><span>Round length (min) </span><input type="number" name="time" id="time"></div>
+            <div><span>Round length </span><input type="number" name="minutes" id="minutes" placeholder="min"> : <input type="number" name="seconds" id="seconds" placeholder="sec"></div>
             <div><span>Player Count </span><input type="number" name="playercount" id="playercount"></div>
             <button id="StartRound" class="sc__btn">Start Round</button>
           </div>
+          <button id="pause">pause</button>
           <button id="endTurn">End turn</button>
 
             <p id="pXTurn">Player 1 turn</p>
